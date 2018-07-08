@@ -52,7 +52,7 @@ public class ScoreManager : MonoBehaviour {
 		case eScoreEvent.gameWin:
 		case eScoreEvent.gameLoss:
 			chain = 0;
-			ScoreManager += scoreRun;
+			score += scoreRun;
 			scoreRun = 0;
 			break;
 
@@ -64,7 +64,7 @@ public class ScoreManager : MonoBehaviour {
 		switch (evt){
 		case eScoreEvent.gameWin:
 			SCORE_FROM_PREV_ROUND=score;
-			print ("You won this round! Round Score:"score);
+			print ("You won this round! Round Score:"+score);
 			break;
 
 		case eScoreEvent.gameLoss:
@@ -80,22 +80,15 @@ public class ScoreManager : MonoBehaviour {
 			break;
 
 		default:
-			print ("score:"score +"scoreRun:" +scoreRun+ "chain:" +chain);
+			print ("score: "+score+" scoreRun:" +scoreRun+"  chain:" +chain);
 			break;
 		}}
 
 	static public int CHAIN{get {return S.chain;}}
 	static public int SCORE{ get { return S.score; } }
-	static public int SCORE_RUN { get { return S.score_run; } }
+	static public int SCORE_RUN { get { return S.scoreRun; } }
 }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-}
+	
