@@ -23,6 +23,7 @@ public class Layout : MonoBehaviour {
 		public PT_XMLReader xmlr;
 		public PT_XMLHashtable xml;
 		public Vector2 multiplier;
+
 		public List <SlotDef> slotDefs;
 		public SlotDef drawPile;
 		public SlotDef discardPile;
@@ -34,7 +35,7 @@ public class Layout : MonoBehaviour {
 			xml = xmlr.xml ["xml"] [0];
 
 			multiplier.x = float.Parse (xml ["multiplier"] [0].att ("x"));
-			multiplier.y = float.Parse (xml["multiplier"] [0].att ("y"));
+			multiplier.y = float.Parse (xml ["multiplier"] [0].att ("y"));
 
 			SlotDef tSD;
 			PT_XMLHashList slotsX = xml ["slot"];
@@ -53,7 +54,8 @@ public class Layout : MonoBehaviour {
 					tSD.y = float.Parse(slotsX[i].att("y"));
 					tSD.layerID= int.Parse (slotsX[i].att("layer"));
 
-					tSD.layerName = sortingLayerNames[tSD.layerID];
+
+					tSD.layerName = sortingLayerNames[ tSD.layerID];
 					switch (tSD.type){
 						case "slot":
 						tSD.faceUp = (slotsX[i].att("faceup") =="1");
