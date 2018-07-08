@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -38,9 +39,9 @@ public class Deck : MonoBehaviour {
 
 	// called by Prospector when it is ready
 	public void InitDeck(string deckXMLText) {
-		
-			ReadDeck(deckXMLText);
-		}
+
+		ReadDeck(deckXMLText);
+	}
 
 
 	// ReadDeck parses the XML file passed to it into Card Definitions
@@ -99,7 +100,7 @@ public class Deck : MonoBehaviour {
 						deco.scale = float.Parse (xPips[j].att("scale"));
 					}
 					cDef.pips.Add (deco);
-				} // for j
+				}  // for j
 			}// if xPips
 
 			// if it's a face card, map the proper sprite
@@ -108,15 +109,15 @@ public class Deck : MonoBehaviour {
 				cDef.face = xCardDefs[i].att ("face");
 			}
 			cardDefs.Add (cDef);
-		} // for i < xCardDefs.Count
-	} // ReadDeck
+		}  // for i < xCardDefs.Count
+	}  // ReadDeck
 
 	public CardDefinition GetCardDefinitionByRank(int rnk) {
 		foreach(CardDefinition cd in cardDefs) {
 			if (cd.rank == rnk) {
 				return(cd);
 			}
-		} // foreach
+		}  // foreach
 		return (null);
 	}//GetCardDefinitionByRank
 
@@ -124,7 +125,7 @@ public class Deck : MonoBehaviour {
 	public void MakeCards() {
 		// stub Add the code from page 577 here
 		cardNames = new List<string>();
-		string[] letters = new string[] {"C","D","H","S"};
+		string[] letters = new string[] {"C","D","H","S"} ;
 		foreach (string s in letters) {
 			for (int i =0; i<13; i++) {
 				cardNames.Add(s+(i+1));
@@ -163,7 +164,7 @@ public class Deck : MonoBehaviour {
 				tSR = tGO.GetComponent<SpriteRenderer>();
 				if (deco.type == "suit") {
 					tSR.sprite = dictSuits[card.suit];
-				} else { // it is a rank
+				}  else { // it is a rank
 					tS = rankSprites[card.rank];
 					tSR.sprite = tS;
 					tSR.color = card.color;
@@ -184,7 +185,7 @@ public class Deck : MonoBehaviour {
 				tGO.name = deco.type;
 
 				card.decoGOs.Add (tGO);
-			} // foreach Deco
+			}  // foreach Deco
 
 
 			//Add the pips
@@ -222,8 +223,8 @@ public class Deck : MonoBehaviour {
 			}
 
 			cards.Add (card);
-		} // for all the Cardnames	
-	} // makeCards
+		}  // for all the Cardnames	
+	}  // makeCards
 
 	//Find the proper face card
 	public Sprite GetFace(string faceS) {
