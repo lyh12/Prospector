@@ -14,6 +14,11 @@ public class Card : MonoBehaviour {
 
 	public GameObject back;  // back of card;
 	public CardDefinition def;  // from DeckXML.xml	 
+
+
+
+
+
 	public SpriteRenderer [] spriteRenderers;
 
 	public bool faceUp {
@@ -25,6 +30,8 @@ public class Card : MonoBehaviour {
 			back.SetActive(!value);
 		}
 	}
+
+
 
 
 

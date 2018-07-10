@@ -8,7 +8,6 @@ public class Prospector : MonoBehaviour {
 
 	[Header("Set in Inspector")]
 
-
 	public TextAsset			deckXML;
 	public TextAsset 			layoutXML;
 	public float 				xOffset = 3;
@@ -201,7 +200,7 @@ public class Prospector : MonoBehaviour {
 				- layout.discardPile.layerID + 0.1f * i);
 
 			cd.faceUp = false;
-			cd.state = eCardState.drawPile;
+			cd.state = eCardState.drawpile;
 
 			cd.SetSortingLayerName (layout.drawPile.layerName);
 			cd.SetSortOrder (-10 * i);
@@ -214,7 +213,7 @@ public class Prospector : MonoBehaviour {
 			case eCardState.target:
 				break;
 
-		case eCardState.drawPile:
+		case eCardState.drawpile:
 			MoveToDiscard (target);
 			MoveToTarget (Draw ());
 			UpdateDrawPile ();
@@ -284,7 +283,7 @@ public class Prospector : MonoBehaviour {
 			FloatingScoreHandler (eScoreEvent.gameWin);
 		} else  { 
 
-			gameOverText.text = "Game Over";
+			gameoverText.text = "Game Over";
 			if (ScoreManager.HIGH_SCORE <=score){
 				string str="You got the high score\nHigh Score:" +score;
 				roundResultText.text =str;
