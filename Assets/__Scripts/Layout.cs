@@ -18,6 +18,7 @@ public class SlotDef {
 		public Vector2 stagger;
 
 	}
+
 public class Layout : MonoBehaviour {
 
 		public PT_XMLReader xmlr;
@@ -33,6 +34,8 @@ public class Layout : MonoBehaviour {
 			xmlr = new PT_XMLReader ();
 			xmlr.Parse (xmlText);
 			xml = xmlr.xml ["xml"] [0];
+		print ("I'm here");
+
 
 			multiplier.x = float.Parse (xml ["multiplier"] [0].att ("x"));
 			multiplier.y = float.Parse (xml ["multiplier"] [0].att ("y"));
@@ -77,14 +80,14 @@ public class Layout : MonoBehaviour {
 								case "discardpile":
 								discardPile = tSD;
 								break;
-								}}}
-
-
-					
-
+								}}}					
 	// Use this for initialization
 	void Start () {
-		
+
+
+
+
+
 	}
 	
 	// Update is called once per frame

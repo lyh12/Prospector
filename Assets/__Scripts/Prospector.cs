@@ -8,6 +8,7 @@ public class Prospector : MonoBehaviour {
 
 	[Header("Set in Inspector")]
 
+
 	public TextAsset			deckXML;
 	public TextAsset 			layoutXML;
 	public float 				xOffset = 3;
@@ -65,7 +66,7 @@ public class Prospector : MonoBehaviour {
 	} 
 
 	void Start () {
-		Scoreboard.S.score = ScoreManager.SCORE;
+		Scoreboard.S.score = ScoreManager.S.score;
 
 		deck = GetComponent<Deck> ();
 		deck.InitDeck (deckXML.text);
@@ -269,7 +270,7 @@ public class Prospector : MonoBehaviour {
 
 	void GameOver (bool won){
 
-		int score = ScoreManager.SCORE;
+		int score = ScoreManager.S.score;
 		if (fsRun != null)
 			score += fsRun.score;
 		

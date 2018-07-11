@@ -12,7 +12,7 @@ public enum eScoreEvent{
 
 public class ScoreManager : MonoBehaviour {
 
-	static private ScoreManager S;
+	static public ScoreManager S;
 
 	static public int SCORE_FROM_PREV_ROUND =0;
 	static public int HIGH_SCORE =0;
@@ -85,8 +85,8 @@ public class ScoreManager : MonoBehaviour {
 		}}
 
 	static public int CHAIN{get {return S.chain;}}
-	static public int SCORE{ get { return S.score; } }
-	static public int SCORE_RUN { get { return S.scoreRun; } }
+	//static public int SCORE{ get { return S.score;}}
+	static public int SCORE_RUN { get { return S.scoreRun;}}
 }
 
 
