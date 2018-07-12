@@ -24,7 +24,7 @@ public class Prospector : MonoBehaviour {
 
 
 	[Header("Set Dynamically")]
-		
+
 	public Deck					deck;
 	public Layout 				layout;
 	public List<CardProspector> drawPile;
@@ -116,7 +116,7 @@ public class Prospector : MonoBehaviour {
 				layout.multiplier.x * tSD.x,
 				layout.multiplier.y * tSD.y,
 				-tSD.layerID);
-			
+
 			cp.layoutID=tSD.id;
 			cp.slotDef =tSD;
 			cp.state = eCardState.tableau;
@@ -132,9 +132,9 @@ public class Prospector : MonoBehaviour {
 			}
 		}
 
-	MoveToTarget(Draw());
+		MoveToTarget(Draw());
 
-	UpdateDrawPile();
+		UpdateDrawPile();
 	}
 	CardProspector FindCardByLayoutID (int layoutID){
 		foreach (CardProspector tCP in tableau) {
@@ -208,11 +208,11 @@ public class Prospector : MonoBehaviour {
 
 		}
 	}
-		public void CardClicked (CardProspector cd){
+	public void CardClicked (CardProspector cd){
 
-			switch (cd.state) {
-			case eCardState.target:
-				break;
+		switch (cd.state) {
+		case eCardState.target:
+			break;
 
 		case eCardState.drawpile:
 			MoveToDiscard (target);
@@ -220,7 +220,7 @@ public class Prospector : MonoBehaviour {
 			UpdateDrawPile ();
 			ScoreManager.EVENT (eScoreEvent.draw);
 			FloatingScoreHandler (eScoreEvent.draw);
-				break;
+			break;
 
 		case eCardState.tableau:
 			bool validMatch = true;
@@ -273,7 +273,7 @@ public class Prospector : MonoBehaviour {
 		int score = ScoreManager.S.score;
 		if (fsRun != null)
 			score += fsRun.score;
-		
+
 		if(won) 
 		{
 			gameoverText.text = "RoundOver";
@@ -292,7 +292,7 @@ public class Prospector : MonoBehaviour {
 			}
 			ShowResultsUI (true);
 
-				ScoreManager.EVENT(eScoreEvent.gameLoss); 
+			ScoreManager.EVENT(eScoreEvent.gameLoss); 
 			FloatingScoreHandler (eScoreEvent.gameLoss);
 		}
 
@@ -328,7 +328,7 @@ public class Prospector : MonoBehaviour {
 		case eScoreEvent.draw: 
 		case eScoreEvent.gameWin: 
 		case eScoreEvent.gameLoss: 
-			
+
 			if (fsRun != null) { 
 
 
@@ -366,11 +366,6 @@ public class Prospector : MonoBehaviour {
 			}
 			break;
 		}
-		
+
 	}
 }
-
-
-
-
-
