@@ -257,34 +257,6 @@ public class Utils : MonoBehaviour {
 
 	//============================ Bézier Curves ============================
 
-	/// <summary>
-	/// While most Bézier curves are 3 or 4 points, it is possible to have
-	///   any number of points using this recursive function.
-	/// LerpUnclamped is used to allow extrapolation.
-	/// </summary>
-	/// <param name="u">The amount of interpolation [0..1]</param>
-	/// <param name="vList">A List<Vector3> of points to interpolate</param>
-	/// <param name="i0">The index of the left extent of the used part of the list. 
-	///   Defaults to 0.</param>
-	/// <param name="i1">The index of the right extent of the used part of the list. 
-	///   Defaults to -1, which is then changed to the final element of the List.</param>
-	static public Vector3 Bezier( float u, List<Vector3> vList, int i0=0, int i1=-1 ) {
-		// Set i1 to the last element in vList
-		if (i1 == -1) i1 = vList.Count-1;
-		// If we are only looking at one element of vList, return it
-		if (i0 == i1) {
-			return( vList[i0] );
-		}
-		// Otherwise, call Bezier again with all but the leftmost used element of vList
-		Vector3 l = Bezier(u, vList, i0, i1-1);
-		// And call Bezier again with all but the rightmost used element of vList
-		Vector3 r = Bezier(u, vList, i0+1, i1);
-		// The result is the Lerp of these two recursive calls to Bezier
-		Vector3 res = Vector3.LerpUnclamped( l, r, u );
-		return( res );
-	}
-
-	/* This is the old version of this method from the first edition of the book. – JB
 	// While most Bézier curves are 3 or 4 points, it is possible to have
 	//   any number of points using this recursive function
 	// This uses the Utils.Lerp function because it needs to allow extrapolation
@@ -303,7 +275,6 @@ public class Utils : MonoBehaviour {
 		Vector3 res = Lerp( Bezier(u, vListL), Bezier(u, vListR), u );
 		return( res );
 	}
-    */
 
 	// This version allows an Array or a series of Vector3s as input
 	static public Vector3 Bezier( float u, params Vector3[] vecs ) {
@@ -354,44 +325,6 @@ public class Utils : MonoBehaviour {
 	// This version allows an Array or a series of floats as input
 	static public float Bezier( float u, params float[] vecs ) {
 		return( Bezier( u, new List<float>(vecs) ) );
-	}
-
-
-	/// <summary>
-	/// While most Bézier curves are 3 or 4 points, it is possible to have
-	///   any number of points using this recursive function.
-	/// This uses the Utils.Lerp function rather than the built-in Vector3.Lerp 
-	///   because it needs to allow extrapolation.
-	/// The 
-	/// </summary>
-	/// <param name="u">The amount of interpolation [0..1]</param>
-	/// <param name="vList">A List<Quaternion> of points to interpolate</param>
-	/// <param name="i0">The index of the left extent of the used part of the list. 
-	///   Defaults to 0.</param>
-	/// <param name="i1">The index of the right extent of the used part of the list. 
-	///   Defaults to -1, which is then changed to the final element of the List.</param>
-	static public Quaternion Bezier( float u, List<Quaternion> list, int i0=0, int i1=-1 ) {
-		// Set i1 to the last element in vList
-		if (i1 == -1) i1 = list.Count-1;
-
-		// If we are only looking at one element of vList, return it
-		if (i0 == i1) {
-			return( list[i0] );
-		}
-
-		// Otherwise, call Bezier again with all but the leftmost used element of vList
-		Quaternion l = Bezier(u, list, i0, i1-1);
-		// And call Bezier again with all but the rightmost used element of vList
-		Quaternion r = Bezier(u, list, i0+1, i1);
-		// The result is the Slerp (spherical lerp) of these two recursive calls to Bezier
-		Quaternion res = Quaternion.SlerpUnclamped( l, r, u );
-
-		return( res );
-	}
-
-	// This version allows an Array or a series of Quaternions as input
-	static public Quaternion Bezier( float u, params Quaternion[] arr ) {
-		return( Bezier( u, new List<Quaternion>(arr) ) );
 	}
 
 
@@ -498,90 +431,111 @@ public class Easing {
 			u2 = EaseP( u2, cache[curve] );
 		}
 		return( u2 );
-	}
-
-
-	static private void EaseParse( string curveIn ) {
-		EasingCachedCurve ecc = new EasingCachedCurve();
-		// It's possible to pass in several comma-separated curves
-		string[] curves = curveIn.Split(',');
-		foreach (string curve in curves) {
+		/*	
+			
+			// It's possible to pass in several comma-separated curves
+		string[] curvesA = curves.Split(',');
+		foreach (string curve in curvesA) {
 			if (curve == "") continue;
-			// Split each curve on | to find curve and mod
-			string[] curveA = curve.Split('|');
-			ecc.curves.Add(curveA[0]);
-			if (curveA.Length == 1 || curveA[1] == "") {
-				ecc.mods.Add(float.NaN);
-			} else {
-				float parseRes;
-				if ( float.TryParse(curveA[1], out parseRes) ) {
-					ecc.mods.Add( parseRes );
-				} else {
-					ecc.mods.Add( float.NaN );
-				}
-			}	
+			//string[] curveA = 
 		}
-		cache.Add(curveIn, ecc);
+
+	}
+	//string[] curve = func.Split(',');
+
+	foreach (string curve in curves) {
+
 	}
 
+	string[] funcSplit;
+	foreach (string f in funcs) {
+		funcSplit = f.Split('|');
 
-	static public float Ease( float u, string curve, float mod ) {
-		return( EaseP( u, curve, mod ) );
 	}
+	*/
+}
 
-	static private float EaseP( float u, EasingCachedCurve ec ) {
-		float u2 = u;
-		for (int i=0; i<ec.curves.Count; i++) {
-			u2 = EaseP( u2, ec.curves[i], ec.mods[i] );
-		}
-		return( u2 );
-	}
-
-	static private float EaseP( float u, string curve, float mod ) {
-		float u2 = u;
-
-		switch (curve) {
-		case "In":
-			if (float.IsNaN(mod)) mod = 2;
-			u2 = Mathf.Pow(u, mod);
-			break;
-
-		case "Out":
-			if (float.IsNaN(mod)) mod = 2;
-			u2 = 1 - Mathf.Pow( 1-u, mod );
-			break;
-
-		case "InOut":
-			if (float.IsNaN(mod)) mod = 2;
-			if ( u <= 0.5f ) {
-				u2 = 0.5f * Mathf.Pow( u*2, mod );
+static private void EaseParse( string curveIn ) {
+	EasingCachedCurve ecc = new EasingCachedCurve();
+	// It's possible to pass in several comma-separated curves
+	string[] curves = curveIn.Split(',');
+	foreach (string curve in curves) {
+		if (curve == "") continue;
+		// Split each curve on | to find curve and mod
+		string[] curveA = curve.Split('|');
+		ecc.curves.Add(curveA[0]);
+		if (curveA.Length == 1 || curveA[1] == "") {
+			ecc.mods.Add(float.NaN);
+		} else {
+			float parseRes;
+			if ( float.TryParse(curveA[1], out parseRes) ) {
+				ecc.mods.Add( parseRes );
 			} else {
-				u2 = 0.5f + 0.5f * (  1 - Mathf.Pow( 1-(2*(u-0.5f)), mod )  );
+				ecc.mods.Add( float.NaN );
 			}
-			break;
-
-		case "Sin":
-			if (float.IsNaN(mod)) mod = 0.15f;
-			u2 = u + mod * Mathf.Sin( 2*Mathf.PI*u );
-			break;
-
-		case "SinIn":
-			// mod is ignored for SinIn
-			u2 = 1 - Mathf.Cos( u * Mathf.PI * 0.5f );
-			break;
-
-		case "SinOut":
-			// mod is ignored for SinOut
-			u2 = Mathf.Sin( u * Mathf.PI * 0.5f );
-			break;
-
-		case "Linear":
-		default:
-			// u2 already equals u
-			break;
-		}
-
-		return( u2 );
+		}	
 	}
+	cache.Add(curveIn, ecc);
+}
+
+
+static public float Ease( float u, string curve, float mod ) {
+	return( EaseP( u, curve, mod ) );
+}
+
+static private float EaseP( float u, EasingCachedCurve ec ) {
+	float u2 = u;
+	for (int i=0; i<ec.curves.Count; i++) {
+		u2 = EaseP( u2, ec.curves[i], ec.mods[i] );
+	}
+	return( u2 );
+}
+
+static private float EaseP( float u, string curve, float mod ) {
+	float u2 = u;
+
+	switch (curve) {
+	case "In":
+		if (float.IsNaN(mod)) mod = 2;
+		u2 = Mathf.Pow(u, mod);
+		break;
+
+	case "Out":
+		if (float.IsNaN(mod)) mod = 2;
+		u2 = 1 - Mathf.Pow( 1-u, mod );
+		break;
+
+	case "InOut":
+		if (float.IsNaN(mod)) mod = 2;
+		if ( u <= 0.5f ) {
+			u2 = 0.5f * Mathf.Pow( u*2, mod );
+		} else {
+			u2 = 0.5f + 0.5f * (  1 - Mathf.Pow( 1-(2*(u-0.5f)), mod )  );
+		}
+		break;
+
+	case "Sin":
+		if (float.IsNaN(mod)) mod = 0.15f;
+		u2 = u + mod * Mathf.Sin( 2*Mathf.PI*u );
+		break;
+
+	case "SinIn":
+		// mod is ignored for SinIn
+		u2 = 1 - Mathf.Cos( u * Mathf.PI * 0.5f );
+		break;
+
+	case "SinOut":
+		// mod is ignored for SinOut
+		u2 = Mathf.Sin( u * Mathf.PI * 0.5f );
+		break;
+
+	case "Linear":
+	default:
+		// u2 already equals u
+		break;
+	}
+
+	return( u2 );
+}
 
 }
